@@ -1,0 +1,150 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" href="images/icons8-image-file-48.png" type="image/x-icon">
+    <meta name="description" content="Convert photos or images of different formats such as JPEG, JPG, PNG, GIF to PDF for free">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src='https://kit.fontawesome.com/382a7d08c9.js' crossorigin='anonymous'></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B6VJ501JE3"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-B6VJ501JE3');
+    </script>
+    <title>Photo to PDF</title>
+</head>
+<body>
+    <div class="jumbotron text-center bg-white">
+        <h1>Convert Photo to PDF </h1>
+        <div class="card m-auto shadow" style="width:400px">
+            <canvas id="canvas" class="rounded m-auto p-2" style="width: 300px; height: 300px;"></canvas>
+            <div class="card-body d-flex flex-column">
+                <!-- <input type="text" id="text" placeholder="text"> -->
+                <input type="file" id="imageFile" class="m-2" multiple>
+                <input type="text" id="title" class="m-2" placeholder="Title">
+                <!-- <button >Download to PDF</button> -->
+              <a class="btn btn-primary m-2" id="btn" onclick="pdfHandler()">Download PDF <i class='fas fa-download' style='font-size:24px'></i></a>
+            </div>
+        </div>  
+    </div>
+        
+      <div class="container mb-5">
+        <div class="row">
+          <div class="col-sm-4">
+            <i class='far fa-clone' style='font-size:36px'></i>
+            <h3>Convert Photo to PDF</h3>
+            <p>Turn PNGs and other image file formats (JPG, JPEG, GIF, BMP) into PDFs.
+            Simply download the converted file for free.</p>
+            <!-- <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p> -->
+          </div>
+          <div class="col-sm-4">
+            <i class='far fa-clock' style='font-size:36px'></i>
+            <h3>Instant conversion</h3>
+            <p>Just upload your file to convert it from a photo/image to PDF file instantly.</p>
+            
+          </div>
+          <div class="col-sm-4">
+            <i class='far fa-file-pdf' style='font-size:36px'></i>
+            <h3>The best online PDF converter</h3>        
+            <p>Convert your photos to PDF files in high resolution.
+            Works in any browser such as Google Chrome, Apple Safari & Mozilla Fox.</p>
+           
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <i class='fas fa-file-export' style='font-size:48px;color:purple'></i>
+                <i class='far fa-file-pdf' style='font-size:48px;color:red'></i>
+            </div>
+            <div class="col-sm-6">
+                <h3>Steps</h3>
+                <ul>
+                    <li>Click the Choose a file button above to upload your photo onto the canvas.</li>
+                    <li>Select the image or photo you want to convert to PDF.</li>
+                    <li>After uploading, click the Download to PDF button to convert and download the file from image to PDF.</li>
+                    <li>Your file will appear in your system, ready to view and use.</li>
+                </ul>
+            </div>
+        </div>
+      </div>
+
+      <div class="jumbotron bg-white border-top mt-5 text-center" style="margin-bottom:0">
+        <p>Made with <i class='fas fa-heart' style='font-size:24px;color:red'></i></p>
+      </div>
+</body>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script> -->
+<script>
+    
+window.jsPDF = window.jspdf.jsPDF;
+
+
+btn.onclick = () => {
+    let btn = document.getElementById('btn')
+    // let txt = document.getElementById('text').value
+    let title = document.getElementById('title').value
+    var imageFile = document.getElementById('imageFile').files[0]
+    var canvas = document.getElementById('canvas');
+    var imgData = canvas.toDataURL();
+    console.log('this is the dataUrL', imgData);
+    // "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNby
+    // blAAAADElEQVQImWNgoBMAAABpAAFEI8ARAAAAAElFTkSuQmCC"
+   
+
+    // console.log('imgData is:', imgData)
+    let doc = new jsPDF()
+
+    doc.setFontSize(40)
+    // write some text on to the document
+    doc.text(45,45,'PDF')
+    // set img into document
+    doc.addImage(imgData, 'JPEG',45,45,150,150)
+    // save doc
+    doc.save(title);
+}
+
+var ctx = canvas.getContext('2d')
+
+        imageFile.addEventListener("change", handleImage, false)
+
+        function handleImage (e){
+            console.log(e)
+            var reader = new FileReader()
+
+            // listen for reader event
+            reader.onload = function (event){
+                var image = new Image()
+
+                image.onload = function (){
+                    canvas.width = image.width
+                    canvas.height = image.height
+                    // draw image
+                    ctx.drawImage(image,0,0)
+                }
+
+                image.src = event.target.result
+            }
+
+            reader.readAsDataURL(e.target.files[0])
+            
+        }
+
+
+
+
+</script>
+</html>
