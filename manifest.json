@@ -1,6 +1,7 @@
 {
     "name": "Foto to PDF by Seyi",
     "short_name": "Foto2PDF",
+    "description": "Convert image, photos to PDF format",
     "start_url": "index.html",
     "scope": "./",
     "icons": [
@@ -8,14 +9,9 @@
         "src": "icons8-image-file-48.png",
         "sizes": "192x192",
         "type": "image/png"
-      },
-      {
-        "src": "icons8-image-file-48.png",
-        "sizes": "512x512",
-        "type": "image/png"
       }
     ],
     "theme_color": "#ffd31d",
     "background_color": "#333",
-    "display": "standalone"
+    "display": "fullscreen"
   }
